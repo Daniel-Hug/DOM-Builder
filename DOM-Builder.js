@@ -10,7 +10,7 @@
 	}
 })(this, function() {
 	'use strict';
-	return {
+	var DOM = {
 		buildNode: function buildNode(nodeData) {
 			// create text node
 			if (typeof nodeData === 'string')
@@ -41,7 +41,7 @@
 
 			// add child nodes
 			if (nodeData.kid) el.appendChild(buildNode(nodeData.kid));
-			else if (nodeData.kids) el.appendChild($.DOM.buildDocFrag(nodeData.kids));
+			else if (nodeData.kids) el.appendChild(DOM.buildDocFrag(nodeData.kids));
 
 			return el;
 		},
@@ -51,10 +51,11 @@
 
 			// build each node and stick in docFrag
 			arr.forEach(function appendEach(nodeData) {
-				docFrag.appendChild($.DOM.buildNode(nodeData));
+				docFrag.appendChild(DOM.buildNode(nodeData));
 			});
 
 			return docFrag;
 		}
 	};
+	return DOM;
 });
