@@ -28,10 +28,10 @@
 					if (attr[0] === '_') el[attr.slice(1)] = nodeData[attr];
 
 					// add event listeners
-					else if (attr.slice(0,3) === 'on_') {
+					else if (attr.slice(0, 3) === 'on_') {
 						var eventName = attr.slice(3);
 						var handlers = nodeData[attr];
-						for (var i = 0; i < handlers.length; i++) el.addEventListener(eventName, handlers[i]);
+						for (var i = 0; i < handlers.length; i++) el.addEventListener(eventName, handlers[i], false);
 					}
 
 					// add html attributes
