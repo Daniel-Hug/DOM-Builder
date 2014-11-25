@@ -19,10 +19,10 @@ var output = DOM.buildNode({ el: 'output' });
 document.body.appendChild(DOM.buildDocFrag([
     {
         el: 'form',
-        on_submit: [function(event) {
+        on_submit: function(event) {
             event.preventDefault();
             output.textContent = input.value ? ' Text: ' + input.value : '';
-        }],
+        },
         kids: [ input, { el: 'button', kid: 'Go' } ]
     },
     output
@@ -37,4 +37,4 @@ All are optional. If `el` is unspecified, the element type defaults to 'div'.
  - `kids` (array of node objects): child nodes to append
  - `kid` (node object): single child node to append
  - `_className`, `_contenteditable`, etc. (string, boolean, etc.): JS properties to set on element
- - `on_input`, `on_click`, etc. (array of functions): event listeners to add
+ - `on_input`, `on_click`, etc. (function or array of functions): event listener(s) to add

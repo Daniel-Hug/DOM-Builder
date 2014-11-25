@@ -31,6 +31,7 @@
 					else if (attr.slice(0, 3) === 'on_') {
 						var eventName = attr.slice(3);
 						var handlers = nodeData[attr];
+						if (typeof handlers === 'function') handlers = [handlers];
 						for (var i = 0; i < handlers.length; i++) el.addEventListener(eventName, handlers[i], false);
 					}
 

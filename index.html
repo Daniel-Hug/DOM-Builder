@@ -19,10 +19,10 @@
 	document.body.appendChild(DOM.buildDocFrag([
 		{
 			el: 'form',
-			on_submit: [function(event) {
+			on_submit: function(event) {
 				event.preventDefault();
 				output.textContent = input.value ? ' Text: ' + input.value : '';
-			}],
+			},
 			kids: [ input, { el: 'button', kid: 'Go' } ]
 		},
 		output
