@@ -1,0 +1,13 @@
+{
+  "name": "DOM-Builder",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Daniel-Hug/DOM-Builder",
+  "authors": [
+    "Daniel Hug"
+  ],
+  "main": "DOM-Builder.js",
+  "moduleType": [
+    "amd",
+    "globals"
+  ]
+}

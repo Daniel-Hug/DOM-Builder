@@ -1,4 +1,4 @@
-// http://jsbin.com/DOMBuilder/2/edit
+// https://github.com/Daniel-Hug/DOM-Builder
 (function (root, factory) {
 	'use strict';
 	if (typeof define === 'function' && define.amd) {
@@ -31,7 +31,11 @@
 					else if (attr.slice(0, 3) === 'on_') {
 						var eventName = attr.slice(3);
 						var handlers = nodeData[attr];
+
+						// accept a function:
 						if (typeof handlers === 'function') handlers = [handlers];
+
+						// or an array of functions:
 						for (var i = 0; i < handlers.length; i++) el.addEventListener(eventName, handlers[i], false);
 					}
 
