@@ -1,7 +1,10 @@
 DOM Builder
 ===========
 
-Generate views from JS easy peasy with `dom()`
+Generate views from JS easy peasy with `dom()`. See demos:
+
+ - [counter](http://jsbin.com/riyiwo/edit?js,output)
+ - [search form](http://jsbin.com/qisopo/edit?js,output)
 
 ### Create an element
 **pass:** [node value](#node-values)  
