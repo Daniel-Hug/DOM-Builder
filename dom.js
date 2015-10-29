@@ -55,7 +55,7 @@
 		}
 
 		// add child nodes
-		if (nodeData.kid) el.appendChild(dom(nodeData.kid));
+		if (nodeData.text) el.textContent = nodeData.text;
 		else if (nodeData.kids) el.appendChild(dom(nodeData.kids));
 
 		return el;
