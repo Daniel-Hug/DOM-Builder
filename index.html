@@ -5,18 +5,18 @@
 	<title>DOM Builder demo</title>
 </head>
 <body>
-	<script src="DOM-Builder.js"></script>
+	<script src="dom.js"></script>
 
 	<script>
-	var input = DOM.buildNode({
+	var input = dom({
 		el: "input",
 		type: "text",
 		placeholder: "type something",
 		_autofocus: true
 	});
-	var output = DOM.buildNode({ el: 'output' });
+	var output = dom({ el: 'output' });
 
-	document.body.appendChild(DOM.buildDocFrag([
+	document.body.appendChild(dom([
 		{
 			el: 'form',
 			on_submit: function(event) {
