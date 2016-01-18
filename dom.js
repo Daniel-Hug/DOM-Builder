@@ -10,54 +10,69 @@
 	}
 })(this, function() {
 	'use strict';
-	return function dom(nodeData) {
-		// string -> text node
-		if (typeof nodeData === 'string')
-			return document.createTextNode(nodeData);
 
-		// DOM node -> DOM node
-		if (nodeData instanceof Node) return nodeData;
+	function createDocFrag(array) {
+		// build each node and stick in docFrag
+		var docFrag = document.createDocumentFragment();
+		array.forEach(function(nodeData, i) {
+			docFrag.appendChild(dom(nodeData));
+		});
 
-		// array -> document fragment
-		if (Array.isArray(nodeData)) {
-			// build each node and stick in docFrag
-			var docFrag = document.createDocumentFragment();
-			nodeData.forEach(function(nodeData) {
-				docFrag.appendChild(dom(nodeData));
-			});
+		return docFrag;
+	}
 
-			return docFrag;
-		}
+	function createEl(elData) {
+		var el = document.createElement(elData.el || 'div');
 
-		// object -> element
-		var el = document.createElement(nodeData.el || 'div');
-
-		for (var attr in nodeData) {
-			if (['el', 'kid', 'kids'].indexOf(attr) === -1) {
+		Object.keys(elData).forEach(function(key) {
+			if (['el', 'text', 'kids'].indexOf(key) === -1) {
 				// set JS properties
-				if (attr[0] === '_') el[attr.slice(1)] = nodeData[attr];
+				if (key[0] === '_') {
+					el[key.slice(1)] = elData[key];
+				}
 
-				// add event listeners
-				else if (attr.slice(0, 3) === 'on_') {
-					var eventName = attr.slice(3);
-					var handlers = nodeData[attr];
+				// add event listener(s)
+				else if (key.slice(0, 3) === 'on_') {
+					var eventName = key.slice(3);
+					var handlers = elData[key];
 
 					// accept a function
 					if (typeof handlers === 'function') handlers = [handlers];
 
 					// or an array of functions
-					for (var i = 0; i < handlers.length; i++) el.addEventListener(eventName, handlers[i], false);
+					for (var i = 0; i < handlers.length; i++) {
+						el.addEventListener(eventName, handlers[i], false);
+					}
 				}
 
 				// add html attributes
-				else el.setAttribute(attr, nodeData[attr]);
+				else el.setAttribute(key, elData[key]);
 			}
-		}
+		});
 
-		// add child nodes
-		if (nodeData.text) el.textContent = nodeData.text;
-		else if (nodeData.kids) el.appendChild(dom(nodeData.kids));
+		// set text
+		if (elData.text) el.textContent = elData.text;
+
+		// otherwise add child nodes
+		else if (elData.kids) el.appendChild(createDocFrag(elData.kids));
 
 		return el;
+	}
+
+	return function dom(nodeData) {
+		var type = typeof nodeData;
+
+		// string -> text node
+		return type === 'string' || type === 'number' ?
+			document.createTextNode(nodeData) :
+
+		// DOM node -> DOM node
+		nodeData instanceof Node ? nodeData :
+
+		// array -> document fragment
+		Array.isArray(nodeData) ? createDocFrag(nodeData) :
+
+		// object -> element
+		createEl(nodeData);
 	};
 });
