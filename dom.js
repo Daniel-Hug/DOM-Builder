@@ -11,6 +11,15 @@
 })(this, function() {
 	'use strict';
 
+	function bindSet(val, setter) {
+		// if val is function it's snoopable so the setter should be passed to it.
+		if (typeof val === 'function') {
+			val(setter);
+		} else {
+			setter(val);
+		}
+	}
+	
 	function createDocFrag(array) {
 		// build each node and stick in docFrag
 		var docFrag = document.createDocumentFragment();
@@ -21,6 +30,24 @@
 		return docFrag;
 	}
 
+
+	// snoopable fn should:
+	//  - accept a callback
+	//  - call it right away passing a node value
+	//  - call it again whenever the node value should change
+	function createDataBoundNode(fn) {
+		var node;
+		fn(function(newVal) {
+			//if (node instanceof HTMLElement && newVal.el === node.tagName) {
+				// take props from newVal and stick on node
+			//}
+			var newNode = dom(newVal);
+			if (node) node.parentNode.replaceChild(newNode, node);
+			node = newNode;
+		});
+		return node;
+	}
+	
 	function createEl(elData) {
 		var el = document.createElement(elData.el || 'div');
 
@@ -28,7 +55,10 @@
 			if (['el', 'text', 'kids'].indexOf(key) === -1) {
 				// set JS properties
 				if (key[0] === '_') {
-					el[key.slice(1)] = elData[key];
+					var prop = key.slice(1);
+					bindSet(elData[key], function(newVal) {
+						el[prop] = newVal;
+					});
 				}
 
 				// add event listener(s)
@@ -46,12 +76,20 @@
 				}
 
 				// add html attributes
-				else el.setAttribute(key, elData[key]);
+				else {
+					bindSet(elData[key], function(newVal) {
+						el.setAttribute(key, newVal);
+					});
+				}
 			}
 		});
 
 		// set text
-		if (elData.text) el.textContent = elData.text;
+		if (elData.text) {
+			bindSet(elData.text, function(newVal) {
+				el.textContent = newVal;
+			});
+		}
 
 		// otherwise add child nodes
 		else if (elData.kids) el.appendChild(createDocFrag(elData.kids));
@@ -71,6 +109,9 @@
 
 		// array -> document fragment
 		Array.isArray(nodeData) ? createDocFrag(nodeData) :
+
+		// function -> data bound DOM node
+		type === 'function' ? createDataBoundNode(nodeData) :
 
 		// object -> element
 		createEl(nodeData);

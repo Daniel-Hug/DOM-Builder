@@ -5,28 +5,49 @@
 	<title>DOM Builder demo</title>
 </head>
 <body>
+	<script src="snoopy.js"></script>
 	<script src="dom.js"></script>
 
 	<script>
-	var input = dom({
-		el: "input",
-		type: "text",
-		placeholder: "type something",
-		_autofocus: true
-	});
-	var output = dom({ el: 'output' });
+	// setup observable data
+	var counter = new Snoopy({count: 0});
 
-	document.body.appendChild(dom([
+	// counter.even subscribes to counter.count
+	counter.snoop('count', function(val) {
+		counter.set('even', val % 2 === 0);
+	});
+
+	counter.snoop('even', function(even) {
+		counter.set('evenText', even ? 'even.' : 'not even.');
+	});
+
+	// <button>0</button>
+	var button = dom([
 		{
-			el: 'form',
-			on_submit: function(event) {
-				event.preventDefault();
-				output.textContent = input.value ? ' Text: ' + input.value : '';
-			},
-			kids: [ input, { el: 'button', text: 'Go' } ]
+			el: 'button',
+			text: counter.snoop('count'),
+			on_click: function() {
+				counter.set('count', counter.count + 1);
+			}
 		},
-		output
-	]));
+		{
+			el: 'label',
+			kids: [
+				' ',
+				{
+					el: 'input',
+					type: 'checkbox',
+					_checked: counter.snoop('even'),
+					_disabled: true
+				},
+				counter.snoop('count'), ' is ',
+				counter.snoop('evenText')
+			]
+		}
+	]);
+
+	// append to <body>
+	document.body.appendChild(button);
 	</script>
 </body>
 </html>
