@@ -57,7 +57,7 @@ document.body.appendChild(label);
 
 ### Get live DOM updates with [Snoopy](https://github.com/Daniel-Hug/snoopy)
 
-1. include [Snoopy](https://github.com/Daniel-Hug/snoopy) before DOM builder:
+1. include [Snoopy](https://github.com/Daniel-Hug/snoopy) before DOM builder
 
 	```html
 	<script src="path/to/snoopy.js"></script>
@@ -69,7 +69,7 @@ document.body.appendChild(label);
 	var counter = Snoopy({count: 0});
 	```
 
-3. live-bind data with DOM-Builder
+3. live-bind data with Snoopy's `counter.snoop()`
 
 	```js
 	var button = dom({
