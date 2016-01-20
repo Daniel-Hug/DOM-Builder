@@ -1,0 +1,36 @@
+{
+  "name": "snoopy",
+  "main": "snoopy.js",
+  "homepage": "https://github.com/Daniel-Hug/snoopy",
+  "authors": [
+    "Daniel Hug <daniel@hugwebdesign.com>"
+  ],
+  "description": "Observable objects in JS",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "Observable",
+    "watch",
+    "subscribe",
+    "observe"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "e5afe8ac4e",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "e5afe8ac4efc5a2a557d221f81e2ccb71c06d85b"
+  },
+  "_source": "git://github.com/Daniel-Hug/snoopy.git",
+  "_target": "*",
+  "_originalSource": "snoopy",
+  "_direct": true
+}
