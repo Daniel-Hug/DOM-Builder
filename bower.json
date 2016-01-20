@@ -8,5 +8,8 @@
   "moduleType": [
     "amd",
     "globals"
-  ]
+  ],
+  "dependencies": {
+    "snoopy": "*"
+  }
 }
