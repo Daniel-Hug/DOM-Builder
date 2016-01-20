@@ -54,12 +54,45 @@ var label = dom({
 document.body.appendChild(label);
 ```
 
+
+### Get live DOM updates with [Snoopy](https://github.com/Daniel-Hug/snoopy)
+
+1. include [Snoopy](https://github.com/Daniel-Hug/snoopy) before DOM builder:
+
+	```html
+	<script src="path/to/snoopy.js"></script>
+	```
+
+2. stick data in a Snoopy instance
+
+	```js
+	var counter = Snoopy({count: 0});
+	```
+
+3. live-bind data with DOM-Builder
+
+	```js
+	var button = dom({
+		el: 'button',
+		text: counter.snoop('count'),
+		on_click: function() {
+			counter.set('count', counter.count + 1);
+		}
+	});
+	```
+
+
 ### node values
 
 Node values can be any of the following:
- - **object:** creates an element
- - **string:** creates a text node
- - **DOM node without parent:** uses the node
+ - **object:** renders an element
+ - **string or number:** renders a text node
+ - **DOM node without parent:** renders the existing node
+ - **array of node values:** renders a document fragment
+ - **"snoopable" function ([Snoopy](#get-live-dom-updates) makes this easy):**
+   1. should accept a callback
+   2. call it right away passing a node value
+   3. call it again whenever the node value should change
 
 
 ### properties
