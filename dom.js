@@ -75,6 +75,14 @@
 					}
 				}
 
+				// class toggle
+				else if (key.slice(0, 6) === 'class_') {
+					var className = key.slice(6);
+					bindSet(elData[key], function(classEnabled) {
+						el.classList[classEnabled ? 'add' : 'remove'](className);
+					});
+				}
+
 				// add html attributes
 				else {
 					bindSet(elData[key], function(newVal) {

@@ -101,5 +101,6 @@ These are the properties available for object literal [node values](#node-values
  - `el` (string): element type
  - `kids` (array of [node values](#node-values)): child nodes to append
  - `text` (string): sets the text of the element
- - `_className`, `_innerHTML`, etc. (string, boolean, etc.): JS properties to set on element
+ - `_className`, `_innerHTML`, etc. (non-function values or a [snoopable function](#node-values)): JS properties to set on element
  - `on_input`, `on_click`, etc. (function or array of functions): event listener(s) to add
+ - `class_active`, `class_flagged`, etc. (boolean or [snoopable function](#node-values)): specify whether the element should have an 'active' class, 'flagged' class etc.
