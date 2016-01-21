@@ -86,7 +86,11 @@
 				// add html attributes
 				else {
 					bindSet(elData[key], function(newVal) {
-						el.setAttribute(key, newVal);
+						if (newVal == null) {
+							el.removeAttribute(key);
+						} else {
+							el.setAttribute(key, newVal);
+						}
 					});
 				}
 			}
