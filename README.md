@@ -85,7 +85,7 @@ document.body.appendChild(label);
 ### node values
 
 Node values can be any of the following:
- - **object:** renders an element
+ - **plain object:** renders an element
  - **string or number:** renders a text node
  - **DOM node without parent:** renders the existing node
  - **array of node values:** renders a document fragment
@@ -95,8 +95,8 @@ Node values can be any of the following:
    3. call it again whenever the node value should change
 
 
-### properties
-These are the properties available for object literal [node values](#node-values). All are optional. If `el` is unspecified, the element type defaults to 'div'.
+### element properties
+These are the properties available for plain object [node values](#node-values). All are optional. If `el` is unspecified, the element type defaults to 'div'.
 
  - `el` (string): element type
  - `kids` (array of [node values](#node-values)): child nodes to append
