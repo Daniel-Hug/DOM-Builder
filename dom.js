@@ -49,7 +49,8 @@
 	}
 	
 	function createEl(elData) {
-		var el = document.createElement(elData.el || 'div');
+		var el = elData.el instanceof HTMLElement ? elData.el :
+			document.createElement(elData.el || 'div');
 
 		Object.keys(elData).forEach(function(key) {
 			if (['el', 'text', 'kids'].indexOf(key) === -1) {

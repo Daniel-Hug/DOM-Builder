@@ -43,7 +43,7 @@
 	});
 
 	// <button>0</button>
-	var button = dom([
+	var buttonModule = dom([
 		{
 			el: 'button',
 			text: counter.snoop('count'),
@@ -70,8 +70,11 @@
 		}
 	]);
 
-	// append to <body>
-	document.body.appendChild(button);
+	// equivalent to: document.body.appendChild(buttonModule);
+	dom({
+		el: document.body,
+		kids: [buttonModule]
+	});
 	</script>
 </body>
 </html>

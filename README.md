@@ -6,7 +6,7 @@ Generate views from JS easy peasy with `dom()`. See demos:
  - [counter](http://jsbin.com/riyiwo/edit?js,output)
  - [search form](http://jsbin.com/qisopo/edit?js,output)
 
-### Create an element
+### Create or modify an element
 **pass:** [node value](#node-values)  
 **returns:** DOM node
 
@@ -40,6 +40,22 @@ var docFrag = dom([
 	{ el: 'li', text: 'Juice' }
 ]);
 document.querySelector('.shopping-list').appendChild(docFrag);
+```
+
+
+### Modify existing elements
+All the properties we are using in our plain object node values to render new elements can also be used to modify existing elements. This includes adding kids, event listeners, or classes; setting HTML attributes or an element's text; and setting JS properties.
+Let's modify the above example to stick our list items in an existing list using DOM Builder:
+
+```js
+var docFrag = dom({
+	el: document.querySelector('.shopping-list'),
+	kids: [
+		{ el: 'li', text: 'Milk' },
+		{ el: 'li', text: 'Butter' },
+		{ el: 'li', text: 'Juice' }
+	]
+});
 ```
 
 
