@@ -42,10 +42,6 @@
 		counter.set('even', val % 2 === 0);
 	});
 
-	counter.snoop('even', function(even) {
-		counter.set('evenText', even ? 'even.' : 'not even.');
-	});
-
 	// <button>0</button>
 	var button = dom([
 		{
@@ -67,7 +63,9 @@
 					_disabled: true
 				},
 				counter.snoop('count'), ' is ',
-				counter.snoop('evenText')
+				counter.snoop('even', function(even) {
+					return even ? 'even.' : 'not even.';
+				})
 			]
 		}
 	]);
