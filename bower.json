@@ -10,6 +10,6 @@
     "globals"
   ],
   "dependencies": {
-    "snoopy": "*"
+    "snoopy": "~0.1.0"
   }
 }

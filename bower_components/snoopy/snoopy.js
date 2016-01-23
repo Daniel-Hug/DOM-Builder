@@ -1,7 +1,7 @@
 var Snoopy = (function() {
 	function Snoopy(obj) {
 		if (!(this instanceof Snoopy)) return new Snoopy(obj);
-		// don't overwrite this!:
+		// don't overwrite this.snoopers!
 		this.snoopers = {};
 		Object.keys(obj).forEach(function(key) {
 			this[key] = obj[key];
@@ -12,10 +12,10 @@ var Snoopy = (function() {
 		var newVal = this[prop];
 		(this.snoopers[prop] || []).forEach(function(snooper) {
 			snooper.call(this, newVal);
-		});
+		}, this);
 	};
 
-	var get = Snoopy.prototype.get = function(prop) {
+	Snoopy.prototype.get = function(prop, val) {
 		return this[prop];
 	};
 
@@ -24,14 +24,19 @@ var Snoopy = (function() {
 		changed.call(this, prop);
 	};
 
-	Snoopy.prototype.snoop = function(props, snooper) {
-		if (snooper) {
+	Snoopy.prototype.snoop = function(props, map) {
+		if (map) {
+			var snooper;
+			var mapOutput;
+			var propToVal = this.get.bind(this);
 			var propsArr = props.split(' ');
 
-			// caller calls snooper with the values of the passed props
-			var propToVal = get.bind(this);
+			// caller calls map with the values of the passed props
+			// then, if there is a snooper, calls that passing the value returned from the map 
 			var caller = function caller() {
-				snooper.apply(null, propsArr.map(propToVal));
+				var propVals = propsArr.map(propToVal);
+				mapOutput = map.apply(null, propVals);
+				if (snooper) snooper(mapOutput);
 			};
 
 			caller();
@@ -42,6 +47,11 @@ var Snoopy = (function() {
 				if (!t.snoopers[prop]) t.snoopers[prop] = [];
 				t.snoopers[prop].push(caller);
 			});
+
+			return function mappedSnoop(newSnooper) {
+				snooper = newSnooper;
+				snooper(mapOutput);
+			};
 		} else {
 			// snoopable
 			return this.snoop.bind(this, props);
