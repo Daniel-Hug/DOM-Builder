@@ -48,7 +48,7 @@ All the properties we are using in our plain object node values to render new el
 Let's modify the above example to stick our list items in an existing list using DOM Builder:
 
 ```js
-var docFrag = dom({
+var shoppingList = dom({
 	el: document.querySelector('.shopping-list'),
 	kids: [
 		{ el: 'li', text: 'Milk' },
