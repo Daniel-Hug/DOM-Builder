@@ -114,7 +114,9 @@ Node values can be any of the following:
 ### element properties
 These are the properties available for plain object [node values](#node-values) for rendering elements. All are optional. If `el` is unspecified, the element type defaults to 'div'.
 
- - `el` (string): element type
+ - `el`
+   - If value is a string, an element will be created with that tag name.
+   - If value is a DOM node, the other properties in the object will modify that.
  - `kids` (array of [node values](#node-values)): child nodes to append
  - `text` (string): sets the text of the element
  - `_className`, `_innerHTML`, etc. (non-function values or a [snoopable function](#node-values)): JS properties to set on element
